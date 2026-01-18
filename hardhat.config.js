@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -16,13 +17,13 @@ module.exports = {
       url: "https://evmtestnet.confluxrpc.com",
       chainId: 71,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      gasPrice: 1000000000, // 1 gwei
+      // Let Hardhat auto-detect gas price from the network
     },
     confluxMainnet: {
       url: "https://evm.confluxrpc.com",
       chainId: 1030,
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      gasPrice: 1000000000,
+      // Let Hardhat auto-detect gas price from the network
     },
   },
   paths: {

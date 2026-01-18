@@ -4,12 +4,21 @@ A decentralized invoice management system built on Conflux eSpace, allowing free
 
 ## Features
 
+### Smart Contract
 - ✅ Create invoices with client addresses, amounts, and due dates
 - ✅ Track invoice status (Pending, Paid, Overdue, Cancelled)
 - ✅ On-chain payment processing
 - ✅ Automatic overdue detection
 - ✅ View invoices by freelancer or client
 - ✅ Secure and transparent invoice management
+
+### Frontend (Next.js)
+- 🔐 Wallet Integration with MetaMask
+- 📝 Create invoices through intuitive UI
+- 💰 Pay invoices directly from the app
+- 📊 View and filter invoices (sent/received)
+- ✅ Manage invoices (cancel, mark overdue)
+- 🎨 Modern, responsive design with Tailwind CSS
 
 ## Smart Contract Functions
 
@@ -35,24 +44,34 @@ A decentralized invoice management system built on Conflux eSpace, allowing free
 
 ## Installation
 
-1. Clone the repository:
+### 1. Clone the Repository
 ```bash
 git clone <repository-url>
 cd CfxInvoice
 ```
 
-2. Install dependencies:
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-3. Set up environment variables:
+### 3. Set Up Environment Variables
+
+#### For Smart Contract Deployment
 Create a `.env` file in the root directory:
 ```
 PRIVATE_KEY=your_private_key_here
 ```
 
-**⚠️ Important:** Never commit your `.env` file or private key to version control!
+#### For Frontend Application
+Create a `.env.local` file in the root directory:
+```
+NEXT_PUBLIC_CONTRACT_ADDRESS=your_deployed_contract_address_here
+NEXT_PUBLIC_RPC_URL=https://evmtestnet.confluxrpc.com
+NEXT_PUBLIC_CHAIN_ID=71
+```
+
+**⚠️ Important:** Never commit your `.env` or `.env.local` files or private keys to version control!
 
 ## Getting Testnet CFX
 
@@ -68,8 +87,11 @@ npm run compile
 
 ## Deployment
 
+### Deploy Smart Contract
+
 Deploy to Conflux eSpace Testnet:
 ```bash
+npm run compile
 npm run deploy:testnet
 ```
 
@@ -78,10 +100,52 @@ After deployment, you'll see:
 - Network information
 - Link to view on ConfluxScan
 
+**Important:** Copy the contract address and add it to your `.env.local` file as `NEXT_PUBLIC_CONTRACT_ADDRESS`.
+
+### Run Frontend Application
+
+1. Make sure you have deployed the contract and set the contract address in `.env.local`
+
+2. Start the development server:
+```bash
+npm run dev
+```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+4. Connect your MetaMask wallet (ensure you're on Conflux eSpace Testnet)
+
+## Project Structure
+
+```
+CfxInvoice/
+├── app/                    # Next.js frontend (App Router)
+│   ├── page.tsx           # Home page
+│   ├── create/            # Create invoice page
+│   ├── invoices/          # View invoices page
+│   └── globals.css        # Global styles
+├── components/            # React components
+│   ├── WalletProvider.tsx # Wallet context
+│   ├── Navbar.tsx         # Navigation
+│   └── InvoiceCard.tsx    # Invoice card component
+├── contracts/             # Smart contracts
+│   └── InvoiceSystem.sol  # Main contract
+├── lib/                   # Utilities
+│   ├── contract.ts        # Contract interaction
+│   ├── contractABI.ts     # Contract ABI
+│   ├── types.ts           # TypeScript types
+│   └── utils.ts           # Utility functions
+├── scripts/               # Deployment scripts
+│   └── deploy.js          # Contract deployment
+└── README_FRONTEND.md     # Detailed frontend documentation
+```
+
 ## Contract Address (Testnet)
 
 After deployment, your contract will be available at the deployed address. You can view it on:
 - ConfluxScan Testnet: https://evmtestnet.confluxscan.net/
+
+**Remember to add the contract address to `.env.local` for the frontend to work!**
 
 ## Usage Example
 
@@ -144,6 +208,19 @@ uint256[] memory invoices = invoiceSystem.getClientInvoices(clientAddress);
 ## License
 
 MIT
+
+## Frontend Documentation
+
+For detailed frontend documentation, see [README_FRONTEND.md](./README_FRONTEND.md)
+
+## Available Scripts
+
+- `npm run dev` - Start Next.js development server
+- `npm run build` - Build Next.js application for production
+- `npm start` - Start Next.js production server
+- `npm run compile` - Compile smart contracts
+- `npm run deploy:testnet` - Deploy contract to Conflux eSpace Testnet
+- `npm test` - Run tests (if available)
 
 ## Support
 
